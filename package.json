@@ -1,0 +1,45 @@
+{
+  "name": "vubresto-server",
+  "version": "0.0.0",
+  "description": "Server for VUB Resto app",
+  "main": "",
+  "scripts": {
+    "start": "NODE_PATH=.:server NODE_ENV=development nodemon -e js,coffee -w server index.js",
+    "test-api": "tap app/api/test",
+    "test": "npm run test-client && npm run test-pages && npm run test-api"
+  },
+  "repository": {
+    "type": "git",
+    "url": null
+  },
+  "homepage": null,
+  "optionalDependencies": {},
+  "dependencies": {
+    "body-parser": "^1.9.2",
+    "coffee-script": "^1.8.0",
+    "express": "^4.10.2",
+    "express-useragent": "^0.1.2",
+    "lodash": "^2.4.1",
+    "moment": "^2.8.3",
+    "mongoose": "^3.8.19",
+    "nodemon": "^1.2.1",
+    "request": "^2.48.0",
+    "winston": "^0.8.3"
+  },
+  "devDependencies": {
+    "jasmine-node": "^1.14.5"
+  },
+  "keywords": [],
+  "author": {
+    "name": "Ruben Vereecken",
+    "email": "rubenvereecken@gmail.com",
+    "url": null
+  },
+  "license": {
+    "type": "MIT",
+    "url": null
+  },
+  "engine": {
+    "node": ">=0.10"
+  }
+}
