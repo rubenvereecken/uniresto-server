@@ -8,13 +8,14 @@ defaults =
 
 makeError = (code, message) ->
   error = {}
-  error.code = code
   error = message if _.isObject message
   error.message = message unless _.isObject message
+  error.code = code
   _.defaults error, defaults[code]
   error
 
 errorNames =
+  400: 'badRequest'
   401: 'unauthorized'
   403: 'forbidden'
   404: 'notFound'

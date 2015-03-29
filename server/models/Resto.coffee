@@ -8,8 +8,10 @@ RestoSchema = new mongoose.Schema
   name:
     type: String
     unique: yes
+    required: yes
   address:
     type: String
+    required: yes
   location:
     type: [Number]  # this is for MongoDB to guarantee ordering
 

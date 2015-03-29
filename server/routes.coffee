@@ -5,9 +5,8 @@ module.exports = setupRoutes = (app) ->
   baseURL = '/v1'
 
   routers =
-    '/restos/:restoId/menus': menuRouter
-
     '/restos': restoRouter
+    #'/restos/:restoId/menus': menuRouter
 
 
   middleware = {}

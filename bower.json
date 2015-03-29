@@ -1,0 +1,23 @@
+{
+  "name": "uniresto-server",
+  "main": "index.js",
+  "version": "alpha",
+  "homepage": "https://github.com/rubenvereecken/vubresto-server",
+  "authors": [
+    "Ruben Vereecken <rubenvereecken@gmail.com>"
+  ],
+  "description": "Server for Uni Resto. Check your University Restaurant's menu.",
+  "keywords": [
+    "vub",
+    "resto"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

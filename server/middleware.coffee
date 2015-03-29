@@ -7,11 +7,14 @@ errors = require './errors'
 utils = require './utils'
 config = require './config'
 
+reformatErrorsMiddleware = (err, req, res, next) ->
+  return res.send {type: "SyntaxError", message: err.body, code: err.status} if err instanceof SyntaxError
+  next()
+
 setupGeneralMiddleware = (app) ->
   app.use userAgent.express()
   app.use bodyParser.json()
-  app
-
+  app.use reformatErrorsMiddleware
 
 module.exports = setupMiddleware = (app) ->
   setupGeneralMiddleware app

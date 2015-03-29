@@ -16,9 +16,11 @@ MenuSchema = new mongoose.Schema
     default: Date.now
   date:
     type: Date
+    required: yes
   resto:
     type: mongoose.Schema.Types.ObjectId
     ref: 'Resto'
+    required: yes
   dishes: [DishSchema]
 
 
