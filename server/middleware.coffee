@@ -6,6 +6,7 @@ favicon = require 'express-favicon'
 cookieParser = require 'cookie-parser'
 cookieSession = require 'cookie-session'
 path = require 'path'
+fs = require 'fs'
 
 errors = require './errors'
 utils = require './utils'
@@ -18,7 +19,10 @@ reformatErrorsMiddleware = (err, req, res, next) ->
 setupGeneralMiddleware = (app) ->
   #app.use express.compress()
   app.use express.static path.join __dirname, '..', 'public'
+
+  # TODO do I need this?
   app.use express.static path.join __dirname, '..', 'bower_components', 'bootstrap'
+  app.use express.static path.join __dirname, '..', 'bower_components', 'flat-ui', 'dist'
 
   app.use favicon path.join __dirname, '../public','images','favicon.ico'
   app.use cookieParser(config.cookieSecret)
@@ -27,6 +31,22 @@ setupGeneralMiddleware = (app) ->
   app.use cookieSession({secret:'2EqPfxTEqUtRXVfZygLR'})
 
   app.use reformatErrorsMiddleware
+
+
+  #- Serve index.html
+  try
+    mainHTML = fs.readFileSync(path.join(__dirname, '../public', 'index.html'), 'utf8')
+  catch e
+    winston.error "Error modifying index.html: #{e}"
+
+  app.all '*', (req, res) ->
+    # insert the user object directly into the html so the application can have it immediately. Sanitize </script>
+#      data = mainHTML.replace('"userObjectTag"', JSON.stringify(UserHandler.formatEntity(req, req.user)).replace(/\//g, '\\/'))
+    #res.header 'Cache-Control', 'no-cache, no-store, must-revalidate'
+    #res.header 'Pragma', 'no-cache'
+    #res.header 'Expires', 0
+    res.send 200, mainHTML
+
 
 module.exports = setupMiddleware = (app) ->
   setupGeneralMiddleware app

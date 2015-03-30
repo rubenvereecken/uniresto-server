@@ -8,6 +8,8 @@ class Router extends FrimFram.Router
   routes:
     '': go('HomeView')
 
+    'admin': go 'admin/HomeView'
+
     'api/v1/*path': 'routeToServer'
 
     'file/*path': 'routeToServer'
