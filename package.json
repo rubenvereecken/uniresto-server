@@ -17,11 +17,12 @@
   "dependencies": {
     "body-parser": "^1.9.2",
     "coffee-script": "^1.9.1",
+    "cookie-parser": "^1.3.4",
+    "cookie-session": "^1.1.0",
     "express": "^4.10.2",
+    "express-favicon": "^1.0.1",
     "express-useragent": "^0.1.2",
-    "grunt-clean": "^0.4.0",
-    "grunt-copy": "^0.1.0",
-    "lodash": "^2.4.1",
+    "lodash": "3.6.x",
     "moment": "^2.8.3",
     "mongoose": "^3.8.19",
     "node-env-file": "^0.1.7",
@@ -30,12 +31,16 @@
     "winston": "^0.8.3"
   },
   "devDependencies": {
-    "grunt": "^0.4.5",
-    "grunt-browserify": "^3.6.0",
-    "grunt-contrib-clean": "^0.6.0",
-    "grunt-contrib-copy": "^0.8.0",
-    "grunt-contrib-watch": "^0.6.1",
-    "jasmine-node": "^1.14.5"
+    "auto-reload-brunch": "^1.7.8",
+    "brunch": "^1.7.20",
+    "coffee-script-brunch": "^1.8.1",
+    "coffeelint-brunch": "^1.7.0",
+    "css-brunch": "^1.7.0",
+    "jade-brunch": "^1.8.1",
+    "jasmine-node": "^1.14.5",
+    "javascript-brunch": "^1.7.1",
+    "sass-brunch": "^1.8.10",
+    "uglify-js-brunch": "^1.7.7"
   },
   "keywords": [],
   "author": {
