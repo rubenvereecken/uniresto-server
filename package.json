@@ -19,6 +19,8 @@
     "coffee-script": "^1.9.1",
     "express": "^4.10.2",
     "express-useragent": "^0.1.2",
+    "grunt-clean": "^0.4.0",
+    "grunt-copy": "^0.1.0",
     "lodash": "^2.4.1",
     "moment": "^2.8.3",
     "mongoose": "^3.8.19",
@@ -28,6 +30,11 @@
     "winston": "^0.8.3"
   },
   "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-browserify": "^3.6.0",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-copy": "^0.8.0",
+    "grunt-contrib-watch": "^0.6.1",
     "jasmine-node": "^1.14.5"
   },
   "keywords": [],

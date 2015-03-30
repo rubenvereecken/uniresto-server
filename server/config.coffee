@@ -11,8 +11,8 @@ config.mongo =
   port: env.UNIR_MONGO_PORT or 27017
   host: env.UNIR_MONGO_HOST or 'localhost'
   db: env.UNIR_MONGO_DB or 'uniresto'
-  username: env.UNIR_MONGO_USERNAME or 'mens'
-  password: env.UNIR_MONGO_PASSWORD or 'sexy'
+  username: env.UNIR_MONGO_USERNAME or ''
+  password: env.UNIR_MONGO_PASSWORD or ''
 
 config.isProduction = config.mongo.host isnt 'localhost'  # could be better I suppose
 

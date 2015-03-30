@@ -2,7 +2,7 @@ mongoose = require 'mongoose'
 log = require 'winston'
 
 DishSchema = new mongoose.Schema
-  perLanguage: [ new mongoose.Schema
+  byLanguage: [ new mongoose.Schema
     language: type: String
     name: type: String
     category: type: String

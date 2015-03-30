@@ -2,6 +2,7 @@ winston = require 'winston'
 userAgent = require 'express-useragent'
 express = require 'express'
 bodyParser = require 'body-parser'
+path = require 'path'
 
 errors = require './errors'
 utils = require './utils'
@@ -12,6 +13,9 @@ reformatErrorsMiddleware = (err, req, res, next) ->
   next()
 
 setupGeneralMiddleware = (app) ->
+  #app.use express.compress()
+  console.log  __dirname + '../public'
+  app.use express.static path.join __dirname, '..', 'public'
   app.use userAgent.express()
   app.use bodyParser.json()
   app.use reformatErrorsMiddleware
