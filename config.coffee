@@ -7,11 +7,11 @@ regJoin = (s) -> new RegExp(s.replace(/\//g, '[\\\/\\\\]'))
 exports.config =
   paths:
     'public': 'public'
-    'watched': ['app', 'test/app', 'vendor', 'src']
+    'watched': ['app', 'test/app', 'vendor']
     
   conventions:
     ignored: (path) -> _.startsWith(sysPath.basename(path), '_')
-    vendor: /(vendor|src|bower_components)[\\/]/
+    vendor: /(vendor|frimfram|bower_components)[\\/]/
 
   sourceMaps: true
 
@@ -20,8 +20,7 @@ exports.config =
     javascripts:
       defaultExtension: 'coffee'
       joinTo:
-        'javascripts/frimfram.js': /^src/
-        '../dist/frimfram.js': /^src/
+        'javascripts/frimfram.js': /^frimfram/
         'javascripts/app.js': /^app/
         'javascripts/vendor.js': /^(vendor|bower_components)/
         'javascripts/test-app.js': /^test[\/\\]app/
@@ -29,9 +28,9 @@ exports.config =
 
       order:
         before: [
-          'src/init.coffee'
-          'src/BaseClass.coffee'
-          'src/BaseView.coffee'
+          'frimfram/init.coffee'
+          'frimfram/BaseClass.coffee'
+          'frimfram/BaseView.coffee'
           'bower_components/jquery/dist/jquery.js'
           'bower_components/lodash/lodash.js'
           'bower_components/backbone/backbone.js'
@@ -41,8 +40,7 @@ exports.config =
     stylesheets:
       defaultExtension: 'sass'
       joinTo:
-        '../dist/frimfram.css': /^src/
-        'stylesheets/app.css': /^(app|vendor|bower_components|src)/
+        'stylesheets/app.css': /^(app|vendor|bower_components|frimfram)/
       order:
         before: [
           #'app/styles/bootstrap/*'

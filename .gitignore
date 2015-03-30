@@ -1,7 +1,9 @@
 # Custom
 data
 .env
-
+dist
+public
+bower_components
 
 
 # Created by https://www.gitignore.io

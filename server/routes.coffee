@@ -2,7 +2,7 @@ menuRouter = require 'routers/menu'
 restoRouter = require 'routers/resto'
 
 module.exports = setupRoutes = (app) ->
-  baseURL = '/v1'
+  baseURL = '/api/v1'
 
   routers =
     '/restos': restoRouter
@@ -17,7 +17,7 @@ module.exports = setupRoutes = (app) ->
     app.use route, mw
 
   for route, router of routers
-    app.use route, router
+    app.use baseURL + route, router
 
   app
 
