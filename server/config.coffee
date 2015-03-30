@@ -15,6 +15,7 @@ config.mongo =
   password: env.UNIR_MONGO_PASSWORD or ''
 
 config.isProduction = config.mongo.host isnt 'localhost'  # could be better I suppose
+config.cookieSecret = config.UNIR_COOKIE_SECRET or 'shakeallthelamas'
 
 config.express =
   port: env.UNIR_PORT or 3030

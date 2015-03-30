@@ -2,6 +2,9 @@ winston = require 'winston'
 userAgent = require 'express-useragent'
 express = require 'express'
 bodyParser = require 'body-parser'
+favicon = require 'express-favicon'
+cookieParser = require 'cookie-parser'
+cookieSession = require 'cookie-session'
 path = require 'path'
 
 errors = require './errors'
@@ -14,10 +17,15 @@ reformatErrorsMiddleware = (err, req, res, next) ->
 
 setupGeneralMiddleware = (app) ->
   #app.use express.compress()
-  console.log  __dirname + '../public'
   app.use express.static path.join __dirname, '..', 'public'
+  app.use express.static path.join __dirname, '..', 'bower_components', 'bootstrap'
+
+  app.use favicon path.join __dirname, '../public','images','favicon.ico'
+  app.use cookieParser(config.cookieSecret)
   app.use userAgent.express()
   app.use bodyParser.json()
+  app.use cookieSession({secret:'2EqPfxTEqUtRXVfZygLR'})
+
   app.use reformatErrorsMiddleware
 
 module.exports = setupMiddleware = (app) ->

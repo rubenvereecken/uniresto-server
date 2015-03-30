@@ -10,6 +10,11 @@ errors = require 'errors'
 
 router.use createAdminOnlyMiddleware ['POST', 'PUT']
 
+router.get '/', (req, res) ->
+  Resto.find {}, (err, docs) ->
+    return errors.serverError res, err if err
+    res.send docs
+
 router.post '/', (req, res) ->
   resto = new Resto req.body
   Resto.findOne {name: resto.name}, (err, r) ->
