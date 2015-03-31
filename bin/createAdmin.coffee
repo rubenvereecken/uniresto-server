@@ -14,6 +14,7 @@ connectToDatabase (db) ->
   adminObj =
     username: process.env.UNIR_ADMIN_USERNAME or 'uniresto'
     password: process.env.UNIR_ADMIN_PASSWORD or 'uniresto'
+    roles: ['admin']
 
   admin = new User adminObj
 
