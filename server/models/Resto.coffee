@@ -22,6 +22,9 @@ RestoSchema.methods.toJSON = ->
   obj
 
 RestoSchema.statics.getByNameOrId = (nameOrId, callback) ->
-  mongoose.model('Resto').findOne [{_id: nameOrId}, {name: nameOrId}], callback
+  mongoose.model('Resto').findOne Resto.createNameOrIdQuery(nameOrId), callback
+
+RestoSchema.statics.createNameOrIdQuery = (nameOrId) ->
+  $or: [{_id: nameOrId}, {name: nameOrId}]
 
 module.exports = Resto = mongoose.model 'Resto', RestoSchema

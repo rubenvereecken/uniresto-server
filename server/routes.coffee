@@ -10,7 +10,7 @@ module.exports = setupRoutes = (app) ->
 
   routers =
     '/restos': restoRouter
-    #'/restos/:restoId/menus': menuRouter
+    '/restos': menuRouter
 
 
   middleware = {}
