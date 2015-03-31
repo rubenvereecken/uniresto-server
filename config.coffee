@@ -20,11 +20,9 @@ exports.config =
     javascripts:
       defaultExtension: 'coffee'
       joinTo:
-        'javascripts/frimfram.js': /^frimfram/
+        #'javascripts/frimfram.js': /^frimfram/
         'javascripts/app.js': /^app/
-        'javascripts/vendor.js': /^(vendor|bower_components)/
-        'javascripts/test-app.js': /^test[\/\\]app/
-        'javascripts/demo-app.js': /^test[\/\\]demo/
+        'javascripts/vendor.js': /^(vendor|bower_components)(?![\/\\]underscore[\/\\])/
 
       order:
         before: [
