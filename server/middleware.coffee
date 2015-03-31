@@ -33,8 +33,28 @@ setupGeneralMiddleware = (app) ->
   app.use reformatErrorsMiddleware
 
 
+setupFrontend = (app) ->
+  #- Serve index.html
+  try
+    mainHTML = fs.readFileSync(path.join(__dirname, '../public', 'index.html'), 'utf8')
+  catch e
+    log.error "Error modifying index.html: #{e}"
+
+  app.all '*', (req, res) ->
+    # todo change for production
+    # insert the user object directly into the html so the application can have it immediately. Sanitize </script>
+#      data = mainHTML.replace('"userObjectTag"', JSON.stringify(UserHandler.formatEntity(req, req.user)).replace(/\//g, '\\/'))
+    res.header 'Cache-Control', 'no-cache, no-store, must-revalidate'
+    res.header 'Pragma', 'no-cache'
+    res.header 'Expires', 0
+    res.send 200, mainHTML
+
+
 module.exports = setupMiddleware = (app) ->
+  {setupAuthMiddleware} = require './auth'
   setupGeneralMiddleware app
+  setupFrontend app
+  setupAuthMiddleware app
   app
 
 
