@@ -52,10 +52,9 @@ setupFrontend = (app) ->
     winston.error "Error modifying index.html: #{e}"
 
   app.all '*', (req, res) ->
-    # todo change for production
     # insert the user object directly into the html so the application can have it immediately. Sanitize </script>
-    console.log req.user
     mainHTML = mainHTML.replace('"userObjectTag"', JSON.stringify(req.user?.toJSON())?.replace(/\//g, '\\/'))
+    # TODO production settings
     res.header 'Cache-Control', 'no-cache, no-store, must-revalidate'
     res.header 'Pragma', 'no-cache'
     res.header 'Expires', 0
