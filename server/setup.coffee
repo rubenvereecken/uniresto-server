@@ -22,7 +22,7 @@ module.exports.setupLogging = ->
       level: 'debug'
     winston.debug 'Winston initialized to Console'
 
-module.exports.connectToDatabase = ->
+module.exports.connectToDatabase = (done) ->
   connectionString = ->
     dbName = config.mongo.db
     address = config.mongo.host + ':' + config.mongo.port
@@ -33,11 +33,14 @@ module.exports.connectToDatabase = ->
   address = connectionString()
   winston.info "Connecting to MongoDB with connection string #{address}"
 
-  mongoose.connect address
+  db = mongoose.connect address
+
   mongoose.connection.on 'error', (e) ->
     winston.error e
   mongoose.connection.once 'open', ->
     winston.info "Connection to #{address} successfully established"
+    done db if done
+
 
 setupFrontend = (app) ->
   fs = require 'fs'
