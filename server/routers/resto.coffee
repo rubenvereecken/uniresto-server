@@ -8,7 +8,7 @@ Resto = require 'models/Resto'
 {createAdminOnlyMiddleware} = require 'middleware'
 errors = require 'errors'
 
-router.use createAdminOnlyMiddleware ['POST', 'PUT']
+router.use createAdminOnlyMiddleware ['POST', 'PUT', 'PATCH', 'DELETE']
 
 router.get '/', (req, res) ->
   Resto.find {}, (err, docs) ->
@@ -16,6 +16,8 @@ router.get '/', (req, res) ->
     res.send docs
 
 router.post '/', (req, res) ->
+  return errors.unauthorized res unless req.user
+  return errors.forbidden res unless req.user.isAdmin()
   resto = new Resto req.body
   Resto.findOne {name: resto.name}, (err, r) ->
     return errors.conflict res, "Resto '#{resto.name}' already exists" if r
@@ -34,7 +36,7 @@ router.get '/:nameOrId', (req, res) ->
 router.post '/:restoId/menus', (req, res) ->
   #language = req.get 'Content-Language'
   #errors.badRequest res, message: "Missing header", fields: ['Content-Language'] unless language
-  errors.badRequest res, message: "Empty body." unless req.body
+  return errors.badRequest res, message: "Empty body." unless req.body
   restoId = req.params['restoId']
   Resto.getByNameOrId restoId, (err, resto) ->
     return errors.serverError res, err if err

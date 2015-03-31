@@ -5,8 +5,10 @@ bodyParser = require 'body-parser'
 favicon = require 'express-favicon'
 cookieParser = require 'cookie-parser'
 cookieSession = require 'cookie-session'
+#session = require 'express-session'
 path = require 'path'
 fs = require 'fs'
+passport = require 'passport'
 
 errors = require './errors'
 utils = require './utils'
@@ -23,13 +25,21 @@ setupGeneralMiddleware = (app) ->
   # TODO do I need this?
   app.use express.static path.join __dirname, '..', 'bower_components', 'bootstrap'
   app.use express.static path.join __dirname, '..', 'bower_components', 'flat-ui', 'dist'
-
   app.use favicon path.join __dirname, '../public','images','favicon.ico'
-  app.use cookieParser(config.cookieSecret)
+
+  app.use cookieParser() #config.cookieSecret
   app.use userAgent.express()
   app.use bodyParser.json()
-  app.use cookieSession({secret:'2EqPfxTEqUtRXVfZygLR'})
-
+  # need this bit to access form data apparently
+  app.use bodyParser.urlencoded extended: yes
+  app.use cookieSession
+    secret:'2EqPfxTEqUtRXVfZygLR'
+    cookie:
+      #maxAge: 24 * 60 * 60 * 1000 * 3
+      secure: no
+      overwrite: yes    # dev only
+  app.use passport.initialize()
+  app.use passport.session()
   app.use reformatErrorsMiddleware
 
 
@@ -40,26 +50,9 @@ module.exports = setupMiddleware = (app) ->
   app
 
 
-User = require 'models/User'
-
-module.exports.AuthMiddleware = (req, res, next) ->
-  token = req.get 'X-Access-Token'
-  winston.debug 'Authing with token ' + token
-  errors.unauthorized res unless token
-
-  decoded = jwt.decode token, app.get('jwtTokenSecret')
-  userID = decoded.iss
-  expires = decoded.expires
-
-  User.findById userID, (err, user) ->
-    winston.log utils
-    return errors.badInput res, "#{userID} is not an ID" unless utils.isID userID
-    return errors.serverError res, err if err
-
 module.exports.createAdminOnlyMiddleware = (methods=['POST', 'GET', 'PUT', 'OPTIONS', 'DELETE']) ->
   (req, res, next) ->
-    console.log req.param('passPhrase'), config.passPhrase
     if req.method in methods
-      passPhrase = req.param('passPhrase')
-      return errors.unauthorized res, "Incorrect pass phrase, you're not getting in." if passPhrase isnt config.passPhrase
+      return errors.unauthorized res unless req.user
+      return errors.forbidden res unless req.user.isAdmin()
     next()
