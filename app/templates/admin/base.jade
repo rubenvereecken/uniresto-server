@@ -4,21 +4,29 @@ block content
   .col-xs-12
     .navbar.navbar-inverse.navbar-embossed
       .navbar-header
-        button.navbar-toggle(data-toggle="collapse", data-target="#navbar-collapse-01")
+        button.navbar-toggle(data-toggle="collapse", data-target="#admin-navbar-collapse")
           | Toggle navigation
         span.navbar-brand
           | Admin panel
-    .row
-      .col-xs-6.col-xs-offset-3.col-lg-4.col-lg-offset-4
-        #login-form
-          .form-group
-            label.hidden-xs(for="username") Username
-            input#username.form-control(type="text", placeholder="Username")
-          .form-group
-            label.hidden-xs(for="password") Password
-            input#password.form-control(type="text", placeholder="Password")
-          .form-group.text-center
-            button.btn.btn-primary(type="submit") Sign in
+      if me && me.isAdmin()
+        #admin-navbar-collapse.collapse.navbar-collapse
+          ul.nav.navbar-nav.navbar-left
+            li
+              a(href="/admin/restos") Restos
+    if me === undefined
+      .row
+        .col-xs-6.col-xs-offset-3.col-lg-4.col-lg-offset-4
+          #login-form
+            .form-group
+              label.hidden-xs(for="username") Username
+              input#username.form-control(type="text", placeholder="Username")
+            .form-group
+              label.hidden-xs(for="password") Password
+              input#password.form-control(type="text", placeholder="Password")
+            .form-group.text-center
+              button#login.btn.btn-primary(type="submit") Sign in
+    else
+      block admin-content
 
 .form-group
   input.form-control(type="text", placeholder="Username")

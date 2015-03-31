@@ -1,6 +1,9 @@
 class User extends FrimFram.BaseModel
   @className: 'User'
-  @schema: 'http://my.site/schemas#user'
-  urlRoot: '/db/user'
+  urlRoot: '/api/v1/user'
+
+  isAdmin: ->
+    console.log @
+    'admin' in @get 'roles'
 
 module.exports = User

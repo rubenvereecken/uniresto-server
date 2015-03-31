@@ -9,6 +9,7 @@ class Router extends FrimFram.Router
     '': go('HomeView')
 
     'admin': go 'admin/HomeView'
+    'admin/restos': go 'admin/RestosView'
 
     'api/v1/*path': 'routeToServer'
 

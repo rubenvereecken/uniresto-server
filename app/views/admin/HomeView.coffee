@@ -1,3 +1,5 @@
-module.exports = class AdminHomeView extends FrimFram.RootView
-  template: require 'templates/admin/home'
-  className: 'admin-page'
+AdminView = require './AdminView'
+
+module.exports = class AdminHomeView extends AdminView
+  id: 'admin-home-view'
+  template: require '/templates/admin/home'
