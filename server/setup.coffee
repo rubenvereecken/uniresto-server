@@ -39,6 +39,23 @@ module.exports.connectToDatabase = ->
   mongoose.connection.once 'open', ->
     winston.info "Connection to #{address} successfully established"
 
+setupFrontend = (app) ->
+  fs = require 'fs'
+  path = require 'path'
+  #- Serve index.html
+  try
+    mainHTML = fs.readFileSync(path.join(__dirname, '../public', 'index.html'), 'utf8')
+  catch e
+    winston.error "Error modifying index.html: #{e}"
+
+  app.all '*', (req, res) ->
+    # todo change for production
+    # insert the user object directly into the html so the application can have it immediately. Sanitize </script>
+#      data = mainHTML.replace('"userObjectTag"', JSON.stringify(UserHandler.formatEntity(req, req.user)).replace(/\//g, '\\/'))
+    res.header 'Cache-Control', 'no-cache, no-store, must-revalidate'
+    res.header 'Pragma', 'no-cache'
+    res.header 'Expires', 0
+    res.send 200, mainHTML
 
 module.exports.setupExpress = (app) ->
   for setting, value of config.express
@@ -47,6 +64,8 @@ module.exports.setupExpress = (app) ->
 
   setupMiddleware = require './middleware'
   setupRoutes = require './routes'
+
   setupMiddleware app
   setupRoutes app
+  setupFrontend app
   app
