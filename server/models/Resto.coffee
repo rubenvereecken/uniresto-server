@@ -13,6 +13,7 @@ RestoSchema = new mongoose.Schema
     type: String
     required: yes
   location:
+    #lng lat
     type: [Number]  # this is for MongoDB to guarantee ordering
 
 RestoSchema.methods.toJSON = ->

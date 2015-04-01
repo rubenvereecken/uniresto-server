@@ -24,12 +24,25 @@ router.post '/', (req, res) ->
       return errors.badRequest res, err if err
       res.send resto
 
+router.put '/:nameOrId', (req, res) ->
+  nameOrId = req.params['nameOrId']
+  Resto.getByNameOrId nameOrId, (err, resto) ->
+    return errors.serverError res, err if err
+    return errors.notFound res, "Resto '#{nameOrId}' not found" unless resto
+    resto.set key, val for key, val of req.body
+    resto.save (err) ->
+      log.debug err if err
+      return errors.badRequest res, err if err
+      res.send resto
+
 router.get '/:nameOrId', (req, res) ->
   nameOrId = req.params['nameOrId']
   Resto.getByNameOrId nameOrId, (err, resto) ->
     return errors.serverError res, err if err
     return errors.notFound res, "Resto '#{nameOrId}' not found" unless resto
     res.send resto
+
+
 
 router.delete '/:nameOrId', (req, res) ->
   nameOrId = req.params['nameOrId']
