@@ -54,14 +54,12 @@ setupFrontend = (app) ->
   app.all '*', (req, res) ->
     # insert the user object directly into the html so the application can have it immediately. Sanitize </script>
     jsonifiedUser = JSON.stringify(req.user?.toJSON())
-    winston.debug "remember user? " + jsonifiedUser
-    mainHTML = mainHTML.replace(/"userObjectTag"/g, jsonifiedUser)
-    console.log mainHTML
+    data = mainHTML.replace(/"userObjectTag"/g, jsonifiedUser)
     # TODO production settings
     res.header 'Cache-Control', 'no-cache, no-store, must-revalidate'
     res.header 'Pragma', 'no-cache'
     res.header 'Expires', 0
-    res.send 200, mainHTML
+    res.send 200, data
 
 module.exports.setupExpress = (app) ->
   for setting, value of config.express
