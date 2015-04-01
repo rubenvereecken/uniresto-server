@@ -4,6 +4,8 @@ _ = require 'lodash'
 commonjsHeader = fs.readFileSync('node_modules/brunch/node_modules/commonjs-require-definition/require.js', {encoding: 'utf8'})
 regJoin = (s) -> new RegExp(s.replace(/\//g, '[\\\/\\\\]'))
 
+s = '[\\/\\\\]'
+
 exports.config =
   paths:
     'public': 'public'
@@ -22,8 +24,7 @@ exports.config =
       joinTo:
         #'javascripts/frimfram.js': /^frimfram/
         'javascripts/app.js': /^app/
-        'javascripts/vendor.js': /^(vendor|bower_components)(?![\/\\]underscore[\/\\])/
-
+        'javascripts/vendor.js': new RegExp "^(vendor|bower_components)(?!#{s}underscore#{s})"
       order:
         before: [
           'frimfram/init.coffee'
