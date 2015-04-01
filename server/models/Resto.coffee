@@ -17,14 +17,16 @@ RestoSchema = new mongoose.Schema
 
 RestoSchema.methods.toJSON = ->
   obj = @toObject()
-  delete obj._id
+  #delete obj._id
   delete obj.__v
   obj
 
 RestoSchema.statics.getByNameOrId = (nameOrId, callback) ->
-  mongoose.model('Resto').findOne Resto.createNameOrIdQuery(nameOrId), callback
+  q = Resto.createNameOrIdQuery(nameOrId)
+  mongoose.model('Resto').findOne q, callback
 
 RestoSchema.statics.createNameOrIdQuery = (nameOrId) ->
-  $or: [{_id: nameOrId}, {name: nameOrId}]
+  q = $or: [{_id: new mongoose.Types.ObjectId(nameOrId)}, {name: nameOrId}]
+  q
 
 module.exports = Resto = mongoose.model 'Resto', RestoSchema

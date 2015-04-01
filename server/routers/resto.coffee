@@ -25,14 +25,14 @@ router.post '/', (req, res) ->
       res.send resto
 
 router.get '/:nameOrId', (req, res) ->
-  nameOrId = req.query['nameOrId']
+  nameOrId = req.params['nameOrId']
   Resto.getByNameOrId nameOrId, (err, resto) ->
     return errors.serverError res, err if err
     return errors.notFound res, "Resto '#{nameOrId}' not found" unless resto
     res.send resto
 
 router.delete '/:nameOrId', (req, res) ->
-  nameOrId = req.query['nameOrId']
+  nameOrId = req.params['nameOrId']
   Resto.findOneAndRemove Resto.createNameOrIdQuery(nameOrId), (err, resto) ->
     return errors.serverError res, err if err
     return errors.notFound res, "Resto '#{nameOrId}' not found" unless resto

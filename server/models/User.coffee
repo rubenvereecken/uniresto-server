@@ -39,6 +39,7 @@ UserSchema.methods.toJSON = ->
   delete obj.passwordHash
   obj
 
-UserSchema
+UserSchema.methods.isAdmin = ->
+  'admin' in @get 'roles'
 
 module.exports = User = mongoose.model 'User', UserSchema
