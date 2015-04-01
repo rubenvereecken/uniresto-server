@@ -26,7 +26,8 @@ block content
             .form-group.text-center
               button#login.btn.btn-primary(type="submit") Sign in
     else
-      block admin-content
+      .row
+        block admin-content
 
 .form-group
   input.form-control(type="text", placeholder="Username")

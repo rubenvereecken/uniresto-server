@@ -1,4 +1,23 @@
 extends ./base
 
 block admin-content
-  button#new-resto.btn.btn-block.btn-primary
+  .col-lg-12
+    button#new-resto.btn.btn-primary  New Resto
+
+    table#resto-table.table
+      thead
+        tr
+          th Name
+          th Address
+          th Location
+          th
+      tbody
+        each resto in restos.models
+          tr.resto-entry(data-resto=resto.id)
+            td= resto.get('name')
+            td= resto.get('address')
+            td= resto.readableLocation()
+            td.actions.text-right
+              a.fui-new.edit-btn(href="")
+              a.fui-cross.remove-btn(href="")
+
