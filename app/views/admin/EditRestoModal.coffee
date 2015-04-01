@@ -6,9 +6,14 @@ module.exports = class EditRestoModal extends FrimFram.ModalView
   events:
     'click #save-resto': 'saveResto'
 
+
   initialize: (@resto, cfg={}) ->
     console.debug @resto
     _.extend @, cfg
+
+    @$el.on 'keypress', (e) =>
+      if e.which is 13 and $('#resto-form').has(e.target).length
+        @saveResto()
 
   getContext: ->
     ctx = super

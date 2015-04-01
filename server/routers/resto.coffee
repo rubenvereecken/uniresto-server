@@ -20,7 +20,6 @@ router.post '/', (req, res) ->
   Resto.findOne {name: resto.name}, (err, r) ->
     return errors.conflict res, "Resto '#{resto.name}' already exists" if r
     resto.save (err) ->
-      log.debug err if err
       return errors.badRequest res, err if err
       res.send resto
 
@@ -31,7 +30,6 @@ router.put '/:nameOrId', (req, res) ->
     return errors.notFound res, "Resto '#{nameOrId}' not found" unless resto
     resto.set key, val for key, val of req.body
     resto.save (err) ->
-      log.debug err if err
       return errors.badRequest res, err if err
       res.send resto
 

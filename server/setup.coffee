@@ -53,7 +53,10 @@ setupFrontend = (app) ->
 
   app.all '*', (req, res) ->
     # insert the user object directly into the html so the application can have it immediately. Sanitize </script>
-    mainHTML = mainHTML.replace('"userObjectTag"', JSON.stringify(req.user?.toJSON())?.replace(/\//g, '\\/'))
+    jsonifiedUser = JSON.stringify(req.user?.toJSON())
+    winston.debug "remember user? " + jsonifiedUser
+    mainHTML = mainHTML.replace(/"userObjectTag"/g, jsonifiedUser)
+    console.log mainHTML
     # TODO production settings
     res.header 'Cache-Control', 'no-cache, no-store, must-revalidate'
     res.header 'Pragma', 'no-cache'
@@ -67,8 +70,10 @@ module.exports.setupExpress = (app) ->
 
   setupMiddleware = require './middleware'
   setupRoutes = require './routes'
+  {setupReformatErrorsMiddleware} = require './middleware'
 
   setupMiddleware app
   setupRoutes app
+  setupReformatErrorsMiddleware app
   setupFrontend app
   app

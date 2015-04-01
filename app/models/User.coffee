@@ -4,6 +4,6 @@ class User extends FrimFram.BaseModel
   idAttribute: '_id'
 
   isAdmin: ->
-    'admin' in @get 'roles'
+    if @has 'roles' then 'admin' in @get 'roles' else no
 
 module.exports = User
