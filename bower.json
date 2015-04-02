@@ -27,6 +27,7 @@
     "lodash": "~3.6.0",
     "underscore.string": "~3.0.3",
     "underscore": "~1.8.2",
-    "flat-ui": "~2.2.2"
+    "flat-ui": "~2.2.2",
+    "moment": "~2.9.0"
   }
 }
