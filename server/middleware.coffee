@@ -18,6 +18,7 @@ config = require './config'
 setupGeneralMiddleware = (app) ->
   #app.use express.compress()
   app.use express.static path.join __dirname, '..', 'public'
+  app.use express.static path.join __dirname, '..', 'design'
 
   # TODO do I need this?
   app.use express.static path.join __dirname, '..', 'bower_components', 'bootstrap'
