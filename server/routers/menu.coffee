@@ -31,7 +31,10 @@ router.put '/:restoId/menus', (req, res) ->
     return errors.serverError res, err if err
     return errors.notFound res, "Resto '#{restoId }' not found" unless resto
     Menu.findOne {date: req.body.date, resto: resto._id}, (err, menu) ->
-      menu.dishes = req.body.dishes
+      if menu   # update
+        menu.dishes = req.body.dishes
+      else
+        menu = new menu req.body
       menu.save (err) ->
         return errors.badRequest res, err if err
         menu.resto = resto
