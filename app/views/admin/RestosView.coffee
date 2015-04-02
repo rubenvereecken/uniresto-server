@@ -29,15 +29,14 @@ module.exports = class RestosView extends AdminView
     console.debug resto
     modal = new RestoModal resto
     modal.show()
-    @listenToOnce modal, 'saved', (resto) =>
-      @render()
+    @listenToOnce resto, 'sync', @render
 
   newResto: (e) ->
     e.preventDefault()
     resto = new Resto
     modal = new RestoModal resto
     modal.show()
-    @listenToOnce modal, 'saved', (resto) =>
+    @listenToOnce resto, 'sync', =>
       @collection.add resto
       @render()
 

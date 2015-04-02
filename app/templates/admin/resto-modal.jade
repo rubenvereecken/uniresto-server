@@ -5,25 +5,25 @@
         h4= 'Edit Resto ' + resto.get('name')
       else
         h4= 'New Resto'
-      .modal-body
-        #resto-form
+    .modal-body
+      #resto-form
+        .form-group
+          label.hidden-xs(for="resto-name") Name
+          input#resto-name.form-control(type="text", value=resto.get('name'))
+        .form-group
+          label.hidden-xs(for="resto-address") Address
+          input#resto-address.form-control(type="text", value=resto.get('address'))
+        .form-group
+          label.location Location
+          .row
+            .col-xs-6.col-md-3
+              input#longitude.form-control(type="number", value=resto.get('location') && resto.get('location')[0], placeholder="Longitude")
+            .col-xs-6.col-md-3
+              input#latitude.form-control(type="number", value=resto.get('location') && resto.get('location')[1], placeholder="Latitude")
+        if resto.has('_id')
+          label ID
           .form-group
-            label.hidden-xs(for="resto-name") Name
-            input#resto-name.form-control(type="text", value=resto.get('name'))
-          .form-group
-            label.hidden-xs(for="resto-address") Address
-            input#resto-address.form-control(type="text", value=resto.get('address'))
-          .form-group
-            label.location Location
-            .row
-              .col-xs-6.col-md-3
-                input#longitude.form-control(type="number", value=resto.get('location') && resto.get('location')[0], placeholder="Longitude")
-              .col-xs-6.col-md-3
-                input#latitude.form-control(type="number", value=resto.get('location') && resto.get('location')[1], placeholder="Latitude")
-          if resto.has('_id')
-            label ID
-            .form-group
-              input.form-control(type="string", disabled=true, value=resto.get('_id'))
-      .modal-footer
-        button.btn.btn-default(data-dismiss="modal") Never mind
-        button#save-resto.btn.btn-primary Save
+            input.form-control(type="string", disabled=true, value=resto.get('_id'))
+    .modal-footer
+      button.btn.btn-default(data-dismiss="modal") Never mind
+      button#save-resto.btn.btn-primary Save

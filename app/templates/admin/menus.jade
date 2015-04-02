@@ -5,7 +5,7 @@ block admin-content
     .row
       .col-xs-3
         select#resto-select.form-control.select.select-primary(data-toggle="select")
-          for resto in restos.models
+        //  for resto in restos.models
             option(val=resto.id)=resto.get('name')
       .col-xs-3.col-xs-offset-6
         button#new-menu.btn.btn-primary.pull-right  New Menu
@@ -19,8 +19,9 @@ block admin-content
       tbody
         each menu in menus.models
           tr.menu-entry(data-menu=menu.id)
-            td= (new Date(menu.get('date')))
+            td= menu.formatDate()
             td= menu.get('dishes').length
             td.actions.text-right
+              a.fui-eye.show-btn(href="")
               a.fui-new.edit-btn(href="")
               a.fui-cross.remove-btn(href="")
