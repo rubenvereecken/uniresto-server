@@ -1,0 +1,116 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "VUB Resto API",
+        "description": "VUB Resto",
+        "version": "1.0"
+    },
+    "host": "api.uber.com",
+    "schemes": [
+        "http"
+    ],
+    "basePath": "/v1",
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/restos/{resto-id}/menus/{menu-id}": {
+            "get": {
+                "summary": "Day Menu",
+                "description": "Returns a single day menu containing multiple dishes.\n",
+                "parameters": [
+                    {
+                        "name": "resto-id",
+                        "in": "path",
+                        "description": "Resto to request menu from",
+                        "required": true,
+                        "type": "string",
+                        "format": "string"
+                    },
+                    {
+                        "name": "menu-id",
+                        "in": "path",
+                        "description": "Specific menu",
+                        "required": true,
+                        "type": "string",
+                        "format": "string"
+                    },
+                    {
+                        "name": "Accepts-Language",
+                        "in": "header",
+                        "description": "Requests content in specific language",
+                        "required": false,
+                        "type": "string",
+                        "format": "string"
+                    }
+                ],
+                "tags": [
+                    "Menus"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A single day menu",
+                        "schema": {
+                            "$ref": "#/definitions/Menu"
+                        },
+                        "headers": {
+                            "Content-Language": {
+                                "description": "Natural language the menu is written in",
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resto or Menu not found",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Menu": {
+            "properties": {
+                "date": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "Relevant date for the menu"
+                },
+                "dishes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Dish"
+                    }
+                }
+            }
+        },
+        "Dish": {
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Name of the dish."
+                },
+                "category": {
+                    "type": "string",
+                    "description": "Category of the dish."
+                }
+            }
+        },
+        "Error": {
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "fields": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
