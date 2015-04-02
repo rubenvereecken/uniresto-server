@@ -25,7 +25,149 @@
                     "200": {
                         "description": "All Restos in an array",
                         "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Resto"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/restos/{name-or-id}": {
+            "get": {
+                "summary": "GET a specific Resto",
+                "description": "Get a single Resto by name or ID. Either can be used but be aware that names are \ncase sensitive.\n",
+                "tags": [
+                    "Resto"
+                ],
+                "parameters": [
+                    {
+                        "name": "name-or-id",
+                        "in": "path",
+                        "description": "Name or ID of Resto. Case sensitive.",
+                        "required": true,
+                        "type": "string",
+                        "format": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A single Resto",
+                        "schema": {
                             "$ref": "#/definitions/Resto"
+                        }
+                    },
+                    "404": {
+                        "description": "Resto not found error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/restos/{resto-id}/menus": {
+            "put": {
+                "summary": "Create new menu or update existing",
+                "description": "Creates or updates a single menu.\nUpdates (or rather, replaces) occur if a Resto already has a menu at that day.\n",
+                "tags": [
+                    "Menu"
+                ],
+                "parameters": [
+                    {
+                        "name": "resto-id",
+                        "in": "path",
+                        "description": "Related Resto for the menu",
+                        "required": true,
+                        "type": "string",
+                        "format": "string"
+                    },
+                    {
+                        "name": "menu",
+                        "in": "body",
+                        "description": "The Menu to create or update",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Menu"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Resulting Menu",
+                        "schema": {
+                            "$ref": "#/definitions/Menu"
+                        }
+                    },
+                    "404": {
+                        "description": "Resto not found",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "get": {
+                "summary": "Get Menus for a specific Resto",
+                "description": "Get multiple Menus for a specific Resto.\nMenus can be filtered by date using `from` and `until` query parameters. Both are         inclusive. For example, one could query all Menus starting from March 20, 2015 by         using `?from=03/30/2015`.\n\nMenus should be requested in a specific language. The default is English, denoted         by `en-US`. To request a specific language use the `Accepts-Language` header.\n",
+                "tags": [
+                    "Menu"
+                ],
+                "parameters": [
+                    {
+                        "name": "resto-id",
+                        "in": "path",
+                        "description": "Related Resto for the menu",
+                        "required": true,
+                        "type": "string",
+                        "format": "string"
+                    },
+                    {
+                        "name": "from",
+                        "in": "query",
+                        "description": "Start date filter",
+                        "required": false,
+                        "type": "string",
+                        "format": "date"
+                    },
+                    {
+                        "name": "until",
+                        "in": "query",
+                        "description": "End date filter",
+                        "required": false,
+                        "type": "string",
+                        "format": "date"
+                    },
+                    {
+                        "name": "Accepts-Language",
+                        "in": "header",
+                        "description": "Requests content in specific language",
+                        "required": false,
+                        "type": "string",
+                        "format": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Resulting Menus",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/LocalizedDish"
+                            }
+                        },
+                        "headers": {
+                            "Content-Language": {
+                                "description": "Natural language the menu is written in (IETF format)",
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resto not found",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
                         }
                     }
                 }
@@ -35,6 +177,9 @@
             "get": {
                 "summary": "Day Menu",
                 "description": "Returns a single day menu containing multiple dishes.\n",
+                "tags": [
+                    "Menu"
+                ],
                 "parameters": [
                     {
                         "name": "resto-id",
@@ -61,9 +206,6 @@
                         "format": "string"
                     }
                 ],
-                "tags": [
-                    "Menu"
-                ],
                 "responses": {
                     "200": {
                         "description": "A single day menu",
@@ -84,48 +226,17 @@
                         }
                     }
                 }
-            },
-            "put": {
-                "summary": "Create new menu or update existing",
-                "description": "Creates or updates a single menu",
-                "parameters": [
-                    {
-                        "name": "resto-id",
-                        "in": "path",
-                        "description": "Resto to request menu from",
-                        "required": true,
-                        "type": "string",
-                        "format": "string"
-                    },
-                    {
-                        "name": "menu-id",
-                        "in": "path",
-                        "description": "Specific menu",
-                        "required": true,
-                        "type": "string",
-                        "format": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "A single day menu",
-                        "schema": {
-                            "$ref": "#/definitions/Menu"
-                        },
-                        "headers": {
-                            "Content-Language": {
-                                "description": "Natural language the menu is written in",
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
             }
         }
     },
     "definitions": {
         "Resto": {
             "properties": {
+                "_id": {
+                    "type": "string",
+                    "format": "string",
+                    "description": "16 character hex string denoting the id"
+                },
                 "name": {
                     "type": "string",
                     "format": "string",
@@ -168,6 +279,29 @@
         },
         "Dish": {
             "properties": {
+                "byLanguage": {
+                    "type": "array",
+                    "items": {
+                        "properties": {
+                            "language": {
+                                "type": "string",
+                                "description": "IETF language tag (e.g. en-US)"
+                            },
+                            "name": {
+                                "type": "string",
+                                "description": "Name of the dish."
+                            },
+                            "category": {
+                                "type": "string",
+                                "description": "Category of the dish."
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "LocalizedDish": {
+            "properties": {
                 "name": {
                     "type": "string",
                     "description": "Name of the dish."
@@ -188,7 +322,10 @@
                     "type": "string"
                 },
                 "fields": {
-                    "type": "string"
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 }
             }
         }
