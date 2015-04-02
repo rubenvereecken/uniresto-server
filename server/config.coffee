@@ -5,7 +5,7 @@ env = process.env
 
 module.exports = config = {}
 config.title = 'VUB Resto'
-config.passPhrase = env.PASS_PHRASE
+config.passPhrase = env.PASS_PHRASE or 'all-your-lama'
 
 config.mongo =
   port: env.UNIR_MONGO_PORT or 27017

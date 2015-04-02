@@ -40,11 +40,17 @@ setupGeneralMiddleware = (app) ->
   app.use passport.session()
   #app.use reformatErrorsMiddleware
 
+setupPassPhraseMiddleware = (app) ->
+  app.use (req, res, next) ->
+    passPhrase = req.query['passPhrase']
+    req.passPhraseOK = passPhrase is config.passPhrase
+    next()
 
 module.exports = setupMiddleware = (app) ->
   {setupAuthMiddleware} = require './auth'
   setupGeneralMiddleware app
   setupAuthMiddleware app
+  setupPassPhraseMiddleware app
   app
 
 # TODO not really working very well so far

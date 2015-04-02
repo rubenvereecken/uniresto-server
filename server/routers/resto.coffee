@@ -8,7 +8,7 @@ Resto = require 'models/Resto'
 {createAdminOnlyMiddleware} = require 'middleware'
 errors = require 'errors'
 
-router.use createAdminOnlyMiddleware ['POST', 'PUT', 'PATCH', 'DELETE']
+#router.use '/', createAdminOnlyMiddleware ['POST', 'PUT', 'PATCH', 'DELETE']
 
 router.get '/', (req, res) ->
   Resto.find {}, (err, docs) ->

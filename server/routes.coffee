@@ -5,21 +5,13 @@ _ = require 'lodash'
 
 menuRouter = require 'routers/menu'
 restoRouter = require 'routers/resto'
+errors = require './errors'
 
 module.exports = setupRoutes = (app) ->
   baseURL = '/api/v1'
 
   routers =
     '/restos': [restoRouter, menuRouter]
-    #'/restos': menuRouter
-
-
-  middleware = {}
-    #'/api/*': AuthMiddleware
-
-
-  for route, mw of middleware
-    app.use route, mw
 
   for route, routerPack of routers
     if _.isArray routerPack
@@ -27,6 +19,8 @@ module.exports = setupRoutes = (app) ->
     else
       app.use baseURL + route, routerPack
 
+  app.use baseURL, (req, res) ->
+    return errors.notFound res, "Route #{req.method} #{req.path} unknown. Sorry mate."
 
 
   app
