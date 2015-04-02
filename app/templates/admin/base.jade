@@ -2,10 +2,10 @@ extends /templates/common/base
 
 block content
   .col-xs-12
-    .navbar.navbar-inverse.navbar-embossed
+    .navbar.navbar-inverse.navbar-embossed(role="navigation")
       .navbar-header
-        button.navbar-toggle(data-toggle="collapse", data-target="#admin-navbar-collapse")
-          | Toggle navigation
+        button.navbar-toggle(type="button", data-toggle="collapse", data-target="#admin-navbar-collapse")
+          span.sr-only Toggle navigation
         span.navbar-brand
           | Admin panel
       if me && me.isAdmin()
@@ -13,6 +13,8 @@ block content
           ul.nav.navbar-nav.navbar-left
             li
               a(href="/admin/restos") Restos
+            li
+              a(href="/admin/menus") Menus
     if me === undefined || !me.isAdmin()
       .row
         .col-xs-6.col-xs-offset-3.col-lg-4.col-lg-offset-4
