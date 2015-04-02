@@ -22,11 +22,10 @@ module.exports = class MenusView extends AdminView
     super
 
     @listenTo @restos, 'sync', (restos) =>
-      console.debug 'restos syncd'
-
+      # fetch the first one even if nothing is selected.. yeah
       if restos.models.length > 0
         resto = restos.models[0]
-        #$('#resto-select').select2 'val', resto
+        @resto = resto
         @menus.resto = resto
         @menus.fetch()
 
@@ -34,23 +33,30 @@ module.exports = class MenusView extends AdminView
     @restos.fetch()
 
   renderRestos: ->
+    console.debug 'renderRestos'
     restoSelect = @$el.find('#resto-select')
     restoSelect.children().remove()
     for resto in @restos.models
       restoSelect.append $ "<option>", value:resto.id, text: resto.get 'name'
+    if @resto
+      # yep this is manually selecting... madness. It's because we rerender the whole page
+      restoSelect.select2 'val', @resto.id
 
   onRender: ->
     super
     console.debug 'onRender'
-    @renderRestos()
     @setupSelect2()
+    @renderRestos()
 
   setupSelect2: ->
     $ =>
       $('#resto-select').select2
         dropdownCssClass: 'dropdown-inverse'
-      $('#resto-select').on 'select2-selecting', => @onRestoSelection arguments...
+      $('#resto-select').on 'select2-selecting', =>
+        @justSelected = true
+        @onRestoSelection arguments...
 
+  # why the f is this one necessary
   onInsert: ->
     console.debug 'onInsert'
     @setupSelect2()
