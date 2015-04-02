@@ -154,7 +154,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/LocalizedDish"
+                                "$ref": "#/definitions/LocalizedMenu"
                             }
                         },
                         "headers": {
@@ -277,31 +277,12 @@
                 }
             }
         },
-        "Dish": {
-            "properties": {
-                "byLanguage": {
-                    "type": "array",
-                    "items": {
-                        "properties": {
-                            "language": {
-                                "type": "string",
-                                "description": "IETF language tag (e.g. en-US)"
-                            },
-                            "name": {
-                                "type": "string",
-                                "description": "Name of the dish."
-                            },
-                            "category": {
-                                "type": "string",
-                                "description": "Category of the dish."
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "LocalizedDish": {
             "properties": {
+                "language": {
+                    "type": "string",
+                    "description": "IETF language tag (e.g. en-US)"
+                },
                 "name": {
                     "type": "string",
                     "description": "Name of the dish."
@@ -309,6 +290,31 @@
                 "category": {
                     "type": "string",
                     "description": "Category of the dish."
+                }
+            }
+        },
+        "Dish": {
+            "properties": {
+                "byLanguage": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/LocalizedDish"
+                    }
+                }
+            }
+        },
+        "LocalizedMenu": {
+            "properties": {
+                "date": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "Relevant date for the menu"
+                },
+                "dishes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/LocalizedDish"
+                    }
                 }
             }
         },
