@@ -18,7 +18,6 @@ module.exports = class RestosView extends AdminView
   initialize: ->
     super
     @collection.fetch success: (restos, res, opts) =>
-      console.log restos
       @render()
 
   editResto: (e) ->

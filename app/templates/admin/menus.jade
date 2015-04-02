@@ -1,0 +1,26 @@
+extends ./base
+
+block admin-content
+  .col-lg-12
+    .row
+      .col-xs-3
+        select#resto-select.form-control.select.select-primary(data-toggle="select")
+          for resto in restos.models
+            option(val=resto.id)=resto.get('name')
+      .col-xs-3.col-xs-offset-6
+        button#new-menu.btn.btn-primary.pull-right  New Menu
+
+    table#menu-table.table
+      thead
+        tr
+          th Date
+          th # of dishes
+          th
+      tbody
+        each menu in menus.models
+          tr.menu-entry(data-menu=menu.id)
+            td= (new Date(menu.get('date')))
+            td= menu.get('dishes').length
+            td.actions.text-right
+              a.fui-new.edit-btn(href="")
+              a.fui-cross.remove-btn(href="")

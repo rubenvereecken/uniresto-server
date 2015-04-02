@@ -20,6 +20,10 @@
                 input#longitude.form-control(type="number", value=resto.get('location') && resto.get('location')[0], placeholder="Longitude")
               .col-xs-6.col-md-3
                 input#latitude.form-control(type="number", value=resto.get('location') && resto.get('location')[1], placeholder="Latitude")
+          if resto.has('_id')
+            label ID
+            .form-group
+              input.form-control(type="string", disabled=true, value=resto.get('_id'))
       .modal-footer
         button.btn.btn-default(data-dismiss="modal") Never mind
         button#save-resto.btn.btn-primary Save
