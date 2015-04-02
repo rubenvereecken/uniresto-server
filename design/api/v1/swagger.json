@@ -5,15 +5,32 @@
         "description": "VUB Resto",
         "version": "1.0"
     },
-    "host": "api.uber.com",
+    "host": "uniresto.eu",
     "schemes": [
         "http"
     ],
-    "basePath": "/v1",
+    "basePath": "/api/v1",
     "produces": [
         "application/json"
     ],
     "paths": {
+        "/restos": {
+            "get": {
+                "summary": "GET all Restos",
+                "description": "Returns all Restos known to the server. Language-independent.\n",
+                "tags": [
+                    "Resto"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "All Restos in an array",
+                        "schema": {
+                            "$ref": "#/definitions/Resto"
+                        }
+                    }
+                }
+            }
+        },
         "/restos/{resto-id}/menus/{menu-id}": {
             "get": {
                 "summary": "Day Menu",
@@ -45,7 +62,7 @@
                     }
                 ],
                 "tags": [
-                    "Menus"
+                    "Menu"
                 ],
                 "responses": {
                     "200": {
@@ -67,10 +84,73 @@
                         }
                     }
                 }
+            },
+            "put": {
+                "summary": "Create new menu or update existing",
+                "description": "Creates or updates a single menu",
+                "parameters": [
+                    {
+                        "name": "resto-id",
+                        "in": "path",
+                        "description": "Resto to request menu from",
+                        "required": true,
+                        "type": "string",
+                        "format": "string"
+                    },
+                    {
+                        "name": "menu-id",
+                        "in": "path",
+                        "description": "Specific menu",
+                        "required": true,
+                        "type": "string",
+                        "format": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A single day menu",
+                        "schema": {
+                            "$ref": "#/definitions/Menu"
+                        },
+                        "headers": {
+                            "Content-Language": {
+                                "description": "Natural language the menu is written in",
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
             }
         }
     },
     "definitions": {
+        "Resto": {
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "format": "string",
+                    "description": "Name of the Resto"
+                },
+                "address": {
+                    "type": "string",
+                    "format": "string",
+                    "description": "Human-readable address of the Resto"
+                },
+                "location": {
+                    "type": "array",
+                    "items": {
+                        "type": "number"
+                    },
+                    "minItems": 2,
+                    "maxItems": 2
+                },
+                "dateAdded": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "Date the Resto was added on the server"
+                }
+            }
+        },
         "Menu": {
             "properties": {
                 "date": {
