@@ -16,7 +16,7 @@ module.exports = class MenusView extends AdminView
     'click .remove-btn': 'removeMenu'
     'click .edit-btn': 'editMenu'
     'click .show-btn': 'showMenu'
-    'click #new-resto': 'newMenuu'
+    'click #new-menu': 'newMenu'
 
   initialize: ->
     super
@@ -80,14 +80,15 @@ module.exports = class MenusView extends AdminView
     entry = $target.parents('.menu-entry')
     menuId = entry.data 'menu'
     menu = @menus.get(menuId)
-    modal = new MenuModal menu: menu, resto: @resto, editMode: no
+    modal = new MenuModal menu: menu, resto: @resto, editMode: yes
     modal.show()
     @listenToOnce menu, 'sync', @render
 
   newMenu: (e) ->
     e.preventDefault()
+    console.debug 'new menu'
     menu = new Menu
-    modal = new MenuModal menu: menu, resto: resto, editMode: no
+    modal = new MenuModal menu: menu, resto: @resto, editMode: yes
     modal.show()
     @listenToOnce menu, 'sync', () =>
       @menus.add menu

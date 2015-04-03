@@ -22,3 +22,12 @@ module.exports = class EditMenuModal extends FrimFram.ModalView
     ctx.editMode = @editMode
     ctx
 
+  onInsert: ->
+    $ ->
+      console.log $('.date-picker').length
+      $('.date-picker').datepicker
+        format: 'mm/dd/yyyy'
+        daysOfWeekHighlighted: [1..5]
+        orientation: 'left top'
+        todayHighlight: yes
+        autoclose: yes

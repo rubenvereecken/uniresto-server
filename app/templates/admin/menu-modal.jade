@@ -7,6 +7,12 @@
         h4= 'New Menu'
     .modal-body
       #menu-form
+        .form-group
+          label.hidden-xs(for="menu-date") Date
+          // type date doesn't work with chrome..
+          input#menu-date.form-control.date-picker(type="text")
+          span.add-on
+            i.icon-th
 
 
 
