@@ -47,7 +47,7 @@ router.delete '/:nameOrId', (req, res) ->
   Resto.findOneAndRemove Resto.createNameOrIdQuery(nameOrId), (err, resto) ->
     return errors.serverError res, err if err
     return errors.notFound res, "Resto '#{nameOrId}' not found" unless resto
-    res.status(200).end()
+    res.send resto
 
 
 
