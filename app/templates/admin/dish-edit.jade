@@ -1,3 +1,5 @@
+- console.log('dish?')
+- console.log(dish)
 .dish.panel.panel-default
    .panel-heading.clearfix
       a.remove-dish.btn
@@ -7,8 +9,8 @@
          .form-group
             label.col-sm-2.control-label Category
             .col-sm-10
-               input.form-control.dish-category(val=dish ? dish.category : undefined)
+               input.form-control.dish-category(value=dish ? dish.category : undefined)
          .form-group
             label.col-sm-2.control-label Name
             .col-sm-10
-               input.form-control.dish-name(val=dish ? dish.name : undefined)
+               input.form-control.dish-name(value=dish ? dish.name : undefined)

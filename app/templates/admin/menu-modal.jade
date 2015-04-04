@@ -16,8 +16,14 @@
         hr
         button#new-dish.btn.btn-primary  New Dish
         #dishes
-        for dish in menu.flattenDishes()
-          include ./dish-edit
+          - var flatDishes = menu.flattenDishes()
+          if flatDishes.length > 0
+            each dish in flatDishes
+              include ./dish-edit
+          else if savedDishes
+            - console.log(savedDishes)
+            each dish in savedDishes
+              include ./dish-edit
 
 
 
