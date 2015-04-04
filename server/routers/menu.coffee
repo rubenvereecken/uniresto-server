@@ -4,6 +4,8 @@ Menu = require 'models/Menu'
 Resto = require 'models/Resto'
 errors = require 'errors'
 log = require 'winston'
+utils = require 'utils'
+
 
 router.get '/:restoId/menus', (req, res) ->
   from = req.query.from
@@ -23,6 +25,20 @@ router.get '/:restoId/menus', (req, res) ->
     Menu.find q, (err, menus) ->
       return errors.serverError res, err if err
       res.send menus
+
+router.delete '/:restoId/menus/:menuId', (req, res) ->
+  restoId = req.params['restoId']
+  menuId = req.params['menuId']
+  Resto.getByNameOrId restoId, (err, resto) ->
+    return errors.serverError res, err if err
+    return errors.notFound res, "Resto '#{restoId }' not found" unless resto
+    q =
+      resto: resto._id
+      _id: utils.toObjectId menuId
+    Menu.findOneAndRemove q, (err, menu) ->
+      return errors.serverError res, err if err
+      return errors.notFound res, "Menu '#{menuId}' not found" unless menu
+      res.send menu
 
 router.post '/:restoId/menus', (req, res) ->
   #language = req.get 'Content-Language'

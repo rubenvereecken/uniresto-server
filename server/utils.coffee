@@ -1,4 +1,5 @@
 config = require './config'
+mongoose = require 'mongoose'
 
 
 module.exports = utils =
@@ -8,3 +9,8 @@ module.exports = utils =
   isAdmin: (req) ->
     passPhrase = req.get 'passPhrase'
     passPhrase is config.passPhrase
+
+  toObjectId: (id) ->
+    unless id instanceof mongoose.Types.ObjectId
+      id = new mongoose.Types.ObjectId(id)
+    id
