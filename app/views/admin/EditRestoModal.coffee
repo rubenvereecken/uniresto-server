@@ -1,5 +1,7 @@
 Resto = require 'models/Resto'
 
+errors = require 'lib/errors'
+
 module.exports = class EditRestoModal extends FrimFram.ModalView
   template: require '/templates/admin/resto-modal'
 
@@ -36,5 +38,6 @@ module.exports = class EditRestoModal extends FrimFram.ModalView
     success = (result) =>
       @trigger 'saved', result
       @hide()
+
     @resto.once 'sync', success
-    @resto.save resto
+    jqxhr = @resto.save resto
