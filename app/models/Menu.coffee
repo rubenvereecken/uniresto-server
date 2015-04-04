@@ -3,17 +3,17 @@ module.exports = class Menu extends FrimFram.BaseModel
   urlRoot: ->
     "/api/v1/restos/#{@get 'resto'}/menus"
 
-  formatDate: ->
-    moment(@get 'date').format 'dddd DD/MM/YYYY'
+  formatDate: (format='MM/DD/YYYY') ->
+    moment(@get 'date').format format
 
   flattenDishes: (lang='en-us')->
     dishes = []
     for dish in @get('dishes') or []
       for locale in dish.byLanguage
-        console.log locale
         if locale.language.toLowerCase() is lang
           dishes.push locale
           break
+    dishes
 
 
   fromFlatDishes: (dishes, defaultLang='en-US') ->

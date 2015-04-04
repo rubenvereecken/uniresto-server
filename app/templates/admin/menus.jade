@@ -8,7 +8,8 @@ block admin-content
         //  for resto in restos.models
             option(val=resto.id)=resto.get('name')
       .col-xs-3.col-xs-offset-6
-        button#new-menu.btn.btn-primary.pull-right  New Menu
+        button#new-menu.btn.btn-primary.pull-right
+          | New Menu
 
     table#menu-table.table
       thead
@@ -22,6 +23,6 @@ block admin-content
             td= menu.formatDate()
             td= menu.get('dishes').length
             td.actions.text-right
-              a.fui-eye.show-btn(href="")
+              //a.fui-eye.show-btn(href="")
               a.fui-new.edit-btn(href="")
               a.fui-cross.remove-btn(href="")

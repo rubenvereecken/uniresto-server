@@ -22,7 +22,6 @@ module.exports = class EditMenuModal extends FrimFram.ModalView
         @saveMenu()
 
   getContext: ->
-    console.log @
     ctx = super
     ctx.resto = @resto
     ctx.menu = @menu
@@ -52,7 +51,6 @@ module.exports = class EditMenuModal extends FrimFram.ModalView
     @menu.set 'resto', @resto?.id or @resto
 
     @savedDishes = ({category: dish.category, name: null} for dish in input.dishes)
-    console.log @savedDishes
     FrimFram.storage.save 'savedDishes', @savedDishes
 
     success = (result) =>

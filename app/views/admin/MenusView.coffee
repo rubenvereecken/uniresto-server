@@ -86,7 +86,6 @@ module.exports = class MenusView extends AdminView
 
   newMenu: (e) ->
     e.preventDefault()
-    console.debug 'new menu'
     menu = new Menu
     modal = new MenuModal menu: menu, resto: @resto, editMode: yes
     modal.show()
