@@ -57,6 +57,30 @@ router.post '/:restoId/menus', (req, res) ->
         menu.set 'resto', resto # populate manually
         res.send menu
 
+router.put '/:restoId/menus/:menuId', (req, res) ->
+  return errors.unauthorized res, "Neither admin nor does passPhrase check out" unless req.user?.isAdmin() or req.passPhraseOK
+  errors.badRequest res, message: "Empty body." unless req.body
+  restoId = req.params['restoId']
+  menuId = req.params['menuId']
+  Resto.getByNameOrId restoId, (err, resto) ->
+    return errors.serverError res, err if err
+    return errors.notFound res, "Resto '#{restoId }' not found" unless resto
+    q =
+      resto: resto._id
+      _id: utils.toObjectId menuId
+    Menu.findOne q, (err, menu) ->
+      return errors.serverError res if err
+      if menu   # update
+        menu.set 'dishes', req.body.dishes  if req.body.dishes
+        menu.set 'date', req.body.date      if req.body.date
+      else
+        menu = new Menu req.body
+      menu.set 'resto', resto._id
+      menu.save (err) ->
+        return errors.badRequest res, err if err
+        menu.set 'resto', resto   # populate for return
+        res.send menu
+
 router.put '/:restoId/menus', (req, res) ->
   return errors.unauthorized res, "Neither admin nor does passPhrase check out" unless req.user?.isAdmin() or req.passPhraseOK
   errors.badRequest res, message: "Empty body." unless req.body
@@ -71,8 +95,6 @@ router.put '/:restoId/menus', (req, res) ->
       else
         menu = new Menu req.body
       menu.set 'resto', resto._id
-      log.debug req.body
-      log.debug menu.toJSON()
       menu.save (err) ->
         return errors.badRequest res, err if err
         menu.set 'resto', resto   # populate for return
