@@ -56,14 +56,14 @@ module.exports = class EditMenuModal extends FrimFram.ModalView
     success = (result) =>
       @trigger 'saved', result
       @hide()
-    @menu.on 'sync', success
+    @menu.once 'sync', success
     @menu.save()
 
   onInsert: ->
     $ ->
       $('.date-picker').datepicker
         format: 'mm/dd/yyyy'
-        daysOfWeekHighlighted: [1..5]
+        #daysOfWeekHighlighted: [1..5]
         orientation: 'left top'
         todayHighlight: yes
         autoclose: yes

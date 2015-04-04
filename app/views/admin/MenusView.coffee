@@ -90,6 +90,8 @@ module.exports = class MenusView extends AdminView
     modal = new MenuModal menu: menu, resto: @resto, editMode: yes
     modal.show()
     @listenToOnce menu, 'sync', () =>
+      #console.log 'sync'
+      #modal.hide()
       @menus.add menu
       @render()
 

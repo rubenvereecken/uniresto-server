@@ -17,10 +17,8 @@
         button#new-dish.btn.btn-primary  New Dish
         #dishes
           - var flatDishes = menu.flattenDishes()
-          - console.log(flatDishes)
           if flatDishes.length > 0
             each dish in flatDishes
-              - console.log(dish)
               include ./dish-edit
           else if savedDishes
             each dish in savedDishes

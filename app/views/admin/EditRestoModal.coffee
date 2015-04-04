@@ -6,7 +6,6 @@ module.exports = class EditRestoModal extends FrimFram.ModalView
   events:
     'click #save-resto': 'saveResto'
 
-
   initialize: (@resto, cfg={}) ->
     console.debug @resto
     _.extend @, cfg
@@ -37,5 +36,5 @@ module.exports = class EditRestoModal extends FrimFram.ModalView
     success = (result) =>
       @trigger 'saved', result
       @hide()
-    @resto.on 'sync', success
+    @resto.once 'sync', success
     @resto.save resto
