@@ -4,7 +4,7 @@
       if menu.get('date')
         h4= 'Menu for ' + resto.get('name') + ' (' + menu.formatDate() + ')'
       else
-        h4= 'New Menu'
+        h4= 'New Menu for ' + resto.get('name')
     .modal-body
       #menu-form
         .form-group
