@@ -14,6 +14,27 @@ DishSchema = new mongoose.Schema
       required: yes
     , _id: no
   ]
+  isProcessed:
+    type: Boolean
+    default: no
+  split:
+    type: [String]
+
+do ->
+  separators = ['with', 'and', 'on']
+
+  defaultLang = 'en-us'
+
+  DishSchema.pre 'save', (next) ->
+    return next() if @get 'isProcessed'
+    dish = _.find @get('byLanguage'), (d) -> d.language.toLowerCase() is defaultLang
+    unless dish
+      log.info "Did not found #{defaultLang} in dish #{@id}"
+      return next()
+
+    dish.name.split
+    next()
+
 
 
 MenuSchema = new mongoose.Schema

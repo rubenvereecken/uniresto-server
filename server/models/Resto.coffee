@@ -29,10 +29,8 @@ RestoSchema.statics.getByNameOrId = (nameOrId, callback) ->
 
 RestoSchema.statics.createNameOrIdQuery = createNameOrIdQuery = (nameOrId) ->
   if utils.isId nameOrId
-    # might still be the name...
-    q = $or: [{_id: new mongoose.Types.ObjectId(nameOrId)}, {name: nameOrId}]
+    _id: new mongoose.Types.ObjectId(nameOrId)
   else
-    q = name: nameOrId
-  q
+    name: nameOrId
 
 module.exports = Resto = mongoose.model 'Resto', RestoSchema
