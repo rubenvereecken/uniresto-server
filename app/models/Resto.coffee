@@ -8,3 +8,4 @@ module.exports = class Resto extends FrimFram.BaseModel
       'n/a'
     else
       "#{loc[0]}, #{loc[1]}"
+

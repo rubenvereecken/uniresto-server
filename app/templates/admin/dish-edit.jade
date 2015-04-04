@@ -1,0 +1,14 @@
+.dish.panel.panel-default
+   .panel-heading.clearfix
+      a.remove-dish.btn
+         .fui-cross
+   .panel-body
+      .form-horizontal
+         .form-group
+            label.col-sm-2.control-label Category
+            .col-sm-10
+               input.form-control.dish-category(val=dish ? dish.category : undefined)
+         .form-group
+            label.col-sm-2.control-label Name
+            .col-sm-10
+               input.form-control.dish-name(val=dish ? dish.name : undefined)
