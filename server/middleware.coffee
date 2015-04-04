@@ -5,7 +5,6 @@ bodyParser = require 'body-parser'
 favicon = require 'express-favicon'
 cookieParser = require 'cookie-parser'
 cookieSession = require 'cookie-session'
-session = require 'express-session'
 path = require 'path'
 fs = require 'fs'
 passport = require 'passport'
@@ -30,7 +29,7 @@ setupGeneralMiddleware = (app) ->
   app.use bodyParser.json()
   # need this bit to access form data apparently
   app.use bodyParser.urlencoded extended: yes
-  app.use session
+  app.use cookieSession
     secret:'2EqPfxTEqUtRXVfZygLR'
     cookie:
       maxAge: 24 * 60 * 60 * 1000 * 3

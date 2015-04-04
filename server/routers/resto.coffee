@@ -38,9 +38,7 @@ router.get '/:nameOrId', (req, res) ->
   Resto.getByNameOrId nameOrId, (err, resto) ->
     return errors.serverError res, err if err
     return errors.notFound res, "Resto '#{nameOrId}' not found" unless resto
-    res.send resto
-
-
+    res.status(200).send resto
 
 router.delete '/:nameOrId', (req, res) ->
   nameOrId = req.params['nameOrId']

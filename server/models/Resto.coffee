@@ -1,5 +1,6 @@
 mongoose = require 'mongoose'
 log = require 'winston'
+utils = require 'utils'
 
 RestoSchema = new mongoose.Schema
   dateAdded:
@@ -23,11 +24,15 @@ RestoSchema.methods.toJSON = ->
   obj
 
 RestoSchema.statics.getByNameOrId = (nameOrId, callback) ->
-  q = Resto.createNameOrIdQuery(nameOrId)
+  q = Resto.createNameOrIdQuery nameOrId
   mongoose.model('Resto').findOne q, callback
 
-RestoSchema.statics.createNameOrIdQuery = (nameOrId) ->
-  q = $or: [{_id: new mongoose.Types.ObjectId(nameOrId)}, {name: nameOrId}]
+RestoSchema.statics.createNameOrIdQuery = createNameOrIdQuery = (nameOrId) ->
+  if utils.isId nameOrId
+    # might still be the name...
+    q = $or: [{_id: new mongoose.Types.ObjectId(nameOrId)}, {name: nameOrId}]
+  else
+    q = name: nameOrId
   q
 
 module.exports = Resto = mongoose.model 'Resto', RestoSchema
