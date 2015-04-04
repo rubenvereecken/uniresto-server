@@ -3,9 +3,15 @@ log = require 'winston'
 
 DishSchema = new mongoose.Schema
   byLanguage: [ new mongoose.Schema
-    language: type: String
-    name: type: String
-    category: type: String
+    language:
+      type: String
+      default: 'en-US'
+    name:
+      type: String
+      required: yes
+    category:
+      type: String
+      required: yes
     , _id: no
   ]
 
