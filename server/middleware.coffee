@@ -65,7 +65,10 @@ module.exports.setupReformatErrorsMiddleware = (app) ->
         fields: fields
         message: err.message
       return errors.badRequest res, err
-    next()
+
+    # todo investigate whether this is ok
+    return errors[err.code] res if err.code
+    return res.send res, err
 
 module.exports.createAdminOnlyMiddleware = (methods=['POST', 'GET', 'PUT', 'OPTIONS', 'DELETE']) ->
   (req, res, next) ->
